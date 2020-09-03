@@ -76,14 +76,22 @@ class Main extends Component {
         bids: bids + 1,
         biddingParty: this.state.currentUser,
       });
+    this.setState({
+      funds: 3000 - 900 - bids * 25,
+    });
   };
 
   setAmount = (bids) => {
     const initAmount = 900;
     const calculatedAmount = bids * 25;
     const result = (initAmount + calculatedAmount).toString();
-    return `₹${result.slice(0, -2)}${
-      result.slice(-2) === "00" ? "" : "." + result.slice(-2)
+    return this.formatAmount(result);
+  };
+
+  formatAmount = (amount) => {
+    amount = amount.toString();
+    return `₹${amount.slice(0, -2)}${
+      amount.slice(-2) === "00" ? "" : "." + amount.slice(-2)
     } Crores`;
   };
 
@@ -153,6 +161,11 @@ class Main extends Component {
           >
             RESET <strong>DEV ONLY</strong>
           </button>
+        </div>
+        <div>
+          <p>{`${this.state.currentUser}'s balance: ${this.formatAmount(
+            this.state.funds
+          )}`}</p>
         </div>
       </ul>
     );
