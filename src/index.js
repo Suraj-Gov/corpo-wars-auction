@@ -163,9 +163,13 @@ class Main extends Component {
           </button>
         </div>
         <div>
-          <p>{`${this.state.currentUser}'s balance: ${this.formatAmount(
-            this.state.funds
-          )}`}</p>
+          <p>
+            {this.state.currentUser.length !== 0
+              ? `${this.state.currentUser}'s balance: ${this.formatAmount(
+                  this.state.funds
+                )}`
+              : "Login to bid"}
+          </p>
         </div>
       </ul>
     );
