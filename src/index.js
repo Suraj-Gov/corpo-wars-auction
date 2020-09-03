@@ -5,7 +5,6 @@ import config from "./firestore";
 
 class Main extends Component {
   constructor() {
-    console.log(config);
     if (!firebase.apps.length) {
       firebase.initializeApp(config);
     }
@@ -13,8 +12,20 @@ class Main extends Component {
     this.state = {
       companies: [],
       changes: [],
+      currentUser: "",
+      funds: -1,
     };
     this.db = firebase.firestore();
+    this.auth = firebase.auth();
+    this.provider = new firebase.auth.GoogleAuthProvider();
+    this.auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({
+          currentUser: user.displayName,
+          funds: 3000,
+        });
+      }
+    });
   }
 
   componentDidMount() {
@@ -26,6 +37,7 @@ class Main extends Component {
             return {
               id: i.doc.id,
               ...i.doc.data(),
+              biddingParty: "", //REMOVE THIS LINE IN PROD
             };
           }),
         });
@@ -57,21 +69,41 @@ class Main extends Component {
   }
 
   bidCompany = (id, bids) => {
-    // this.setState({
-    //   companies: this.state.companies.map((i) => {
-    //     if (i.id === id) {
-    //       i.bids += 1;
-    //       return i;
-    //     } else return i;
-    //   }),
-    // });
-
     this.db
       .collection("companies")
       .doc(id)
       .update({
         bids: bids + 1,
+        biddingParty: this.state.currentUser,
       });
+  };
+
+  setAmount = (bids) => {
+    const initAmount = 900;
+    const calculatedAmount = bids * 25;
+    const result = (initAmount + calculatedAmount).toString();
+    return `₹${result.slice(0, -2)}${
+      result.slice(-2) === "00" ? "" : "." + result.slice(-2)
+    } Crores`;
+  };
+
+  resetStats = async () => {
+    const companiesToReset = await this.db.collection("companies").get();
+    companiesToReset.forEach((doc) => {
+      doc.ref.update({
+        bids: 0,
+        biddingParty: "",
+      });
+    });
+  };
+
+  loginUser = (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    this.auth
+      .signInWithEmailAndPassword(email, password)
+      .then((res) => console.log(res));
   };
 
   render() {
@@ -81,16 +113,47 @@ class Main extends Component {
           <li key={company["id"]}>
             <strong>{company["companyName"]}</strong>
             <span>{"    "}</span>
-            <em>{company["bids"]}</em>
+            <em>{this.setAmount(company["bids"])}</em>
             <span>{"    "}</span>
+            <span>
+              {company["biddingParty"].length === 0
+                ? "No bids yet"
+                : company["biddingParty"]}
+            </span>
 
             <button
               onClick={() => this.bidCompany(company["id"], company["bids"])}
+              disabled={this.state.currentUser.length !== 0 ? false : true}
             >
               Bid
             </button>
           </li>
         ))}
+        <button
+          disabled={this.state.currentUser.length !== 0}
+          onClick={() => {
+            if (this.state.currentUser.length === 0) {
+              this.auth.signInWithPopup(this.provider).then((res) => {
+                this.setState({
+                  currentUser: res.user.displayName,
+                  funds: 3000,
+                });
+              });
+            }
+          }}
+        >
+          {this.state.currentUser.length === 0
+            ? "Sign in with Google"
+            : `Signed in as ${this.state.currentUser}`}
+        </button>
+        <div>
+          <button
+            disabled={this.state.currentUser !== "Suraj Govind"}
+            onClick={() => this.resetStats()}
+          >
+            RESET <strong>DEV ONLY</strong>
+          </button>
+        </div>
       </ul>
     );
   }
