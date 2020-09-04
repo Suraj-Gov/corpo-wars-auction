@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
 import config from "./firestore";
 
 class Main extends Component {
@@ -18,12 +20,23 @@ class Main extends Component {
     this.db = firebase.firestore();
     this.auth = firebase.auth();
     this.provider = new firebase.auth.GoogleAuthProvider();
-    this.auth.onAuthStateChanged((user) => {
-      if (user) {
-        this.setState({
-          currentUser: user.displayName,
-          funds: 3000,
-        });
+    this.auth.onAuthStateChanged(async (user) => {
+      if (user !== null) {
+        try {
+          const userDetails = await this.db
+            .collection("users")
+            .doc(user.email)
+            .get();
+          this.setState({
+            currentUser: user.email,
+            funds: userDetails.data().fundsRemaining,
+          });
+        } catch (e) {
+          console.log(
+            "some error happened when fetching existing user data",
+            e
+          );
+        }
       }
     });
   }
@@ -37,7 +50,7 @@ class Main extends Component {
             return {
               id: i.doc.id,
               ...i.doc.data(),
-              biddingParty: "", //REMOVE THIS LINE IN PROD
+              biddingParty: "", //REMOVE THIS LINE IN PROD, why?
             };
           }),
         });
@@ -76,9 +89,17 @@ class Main extends Component {
         bids: bids + 1,
         biddingParty: this.state.currentUser,
       });
+
     this.setState({
       funds: 3000 - 900 - bids * 25,
     });
+
+    this.db
+      .collection("users")
+      .doc(this.state.currentUser)
+      .update({
+        fundsRemaining: 3000 - 900 - bids * 25,
+      });
   };
 
   setAmount = (bids) => {
@@ -105,73 +126,166 @@ class Main extends Component {
     });
   };
 
-  loginUser = (e) => {
+  loginUser = async (e) => {
+    console.log("logged in user");
     e.preventDefault();
     const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+    const password = document.getElementById("pass").value;
     this.auth
       .signInWithEmailAndPassword(email, password)
-      .then((res) => console.log(res));
+      .then(async (res) => {
+        try {
+          const userDetails = await this.db
+            .collection("users")
+            .doc(email)
+            .get();
+          this.setState({
+            funds: userDetails.data().fundsRemaining,
+          });
+        } catch (e) {
+          console.log(
+            "some error happened when fetching existing user data",
+            e
+          );
+        }
+
+        this.setState({
+          currentUser: res.user.email,
+        });
+      })
+      .catch((res) => {
+        console.log("Error occured, user might not be in registry.", res);
+        return;
+      });
+  };
+
+  createUser = async (e) => {
+    console.log("created user");
+    e.preventDefault();
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("pass").value;
+
+    this.db.collection("users").doc(email).set({
+      name: email,
+      fundsRemaining: 3000,
+    });
+
+    this.auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(async (res) => {
+        try {
+          const userDetails = await this.db
+            .collection("users")
+            .doc(email)
+            .get();
+          this.setState({
+            funds: userDetails.data().fundsRemaining,
+          });
+        } catch (e) {
+          console.log(
+            "some error happened when fetching existing user data",
+            e
+          );
+        }
+
+        this.setState({
+          currentUser: res.user.email,
+        });
+      });
   };
 
   render() {
     return (
-      <ul>
-        {this.state.companies.map((company) => (
-          <li key={company["id"]}>
-            <strong>{company["companyName"]}</strong>
-            <span>{"    "}</span>
-            <em>{this.setAmount(company["bids"])}</em>
-            <span>{"    "}</span>
-            <span>
-              {company["biddingParty"].length === 0
-                ? "No bids yet"
-                : company["biddingParty"]}
-            </span>
+      <React.Fragment>
+        <ul>
+          {this.state.companies.map((company) => (
+            <li key={company["id"]}>
+              <strong>{company["companyName"]}</strong>
+              <span>{"    "}</span>
+              <em>{this.setAmount(company["bids"])}</em>
+              <span>{"    "}</span>
+              <span>
+                {company["biddingParty"].length === 0
+                  ? "No bids yet"
+                  : company["biddingParty"]}
+              </span>
 
-            <button
-              onClick={() => this.bidCompany(company["id"], company["bids"])}
-              disabled={this.state.currentUser.length !== 0 ? false : true}
-            >
-              Bid
-            </button>
-          </li>
-        ))}
-        <button
-          disabled={this.state.currentUser.length !== 0}
-          onClick={() => {
-            if (this.state.currentUser.length === 0) {
-              this.auth.signInWithPopup(this.provider).then((res) => {
-                this.setState({
-                  currentUser: res.user.displayName,
-                  funds: 3000,
-                });
-              });
-            }
-          }}
-        >
-          {this.state.currentUser.length === 0
-            ? "Sign in with Google"
-            : `Signed in as ${this.state.currentUser}`}
-        </button>
+              <button
+                onClick={() => this.bidCompany(company["id"], company["bids"])}
+                disabled={!this.state.currentUser}
+              >
+                Bid
+              </button>
+            </li>
+          ))}
+        </ul>
         <div>
           <button
-            disabled={this.state.currentUser !== "Suraj Govind"}
-            onClick={() => this.resetStats()}
+            hidden={this.state.currentUser}
+            onClick={(e) => {
+              this.loginUser(e);
+            }}
           >
-            RESET <strong>DEV ONLY</strong>
+            Sign in
           </button>
+          <button
+            hidden={!this.state.currentUser}
+            onClick={() => {
+              this.auth.signOut();
+              this.setState({
+                currentUser: "",
+                funds: -1,
+              });
+            }}
+          >
+            SIGN OUT
+          </button>
+          <div>
+            <button
+              disabled={this.state.currentUser !== "dev@cw.com"}
+              onClick={() => this.resetStats()}
+            >
+              RESET <strong>DEV ONLY</strong>
+            </button>
+          </div>
+          <div>
+            <p>
+              {this.state.currentUser
+                ? `${this.state.currentUser}'s balance: ${this.formatAmount(
+                    this.state.funds
+                  )}`
+                : "Login to bid"}
+            </p>
+          </div>
         </div>
-        <div>
-          <p>
-            {this.state.currentUser.length !== 0
-              ? `${this.state.currentUser}'s balance: ${this.formatAmount(
-                  this.state.funds
-                )}`
-              : "Login to bid"}
-          </p>
-        </div>
-      </ul>
+        <label hidden={this.state.currentUser} htmlFor="email">
+          Email
+        </label>
+        <input
+          hidden={this.state.currentUser}
+          type="email"
+          id="email"
+          name="email"
+        />
+
+        <label hidden={this.state.currentUser} htmlFor="pass">
+          Password (8 characters minimum):
+        </label>
+        <input
+          hidden={this.state.currentUser}
+          type="password"
+          id="pass"
+          name="password"
+          minLength="8"
+          required
+        />
+        <button
+          hidden={this.state.currentUser}
+          onClick={(e) => this.createUser(e)}
+        >
+          CREATE ACCOUNT
+        </button>
+      </React.Fragment>
     );
   }
 }
