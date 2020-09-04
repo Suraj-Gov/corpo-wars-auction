@@ -62,6 +62,10 @@ class Main extends Component {
 
   componentDidUpdate() {
     if (this.state.changes.length !== 0) {
+      if (!this.state.currentUser) {
+        alert("Log in for real time updates");
+        return;
+      }
       let updatedCompanies = this.state.companies;
       this.state.changes.forEach((change) => {
         updatedCompanies = updatedCompanies.map((i) => {
@@ -206,6 +210,14 @@ class Main extends Component {
       });
   };
 
+  toggleClickableCompany = async (id) => {
+    const companyToToggle = await this.db.collection("companies").doc(id).get();
+    const companyBiddableStatus = companyToToggle.data().isBiddable;
+    this.db.collection("companies").doc(id).update({
+      isBiddable: !companyBiddableStatus,
+    });
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -221,14 +233,22 @@ class Main extends Component {
                   ? "No bids yet"
                   : company["biddingParty"]}
               </span>
-
               <button
                 onClick={() => this.bidCompany(company["id"], company["bids"])}
-                disabled={!this.state.currentUser}
+                hidden={
+                  !company["isBiddable"] ||
+                  this.state.currentUser === "spectator@cw.com" ||
+                  this.state.currentUser === "dev@cw.com"
+                }
               >
                 Bid
               </button>
-              <button></button>
+              <button
+                hidden={!(this.state.currentUser === "dev@cw.com")}
+                onClick={() => this.toggleClickableCompany(company["id"])}
+              >
+                Toggle
+              </button>
             </li>
           ))}
         </ul>
@@ -255,14 +275,19 @@ class Main extends Component {
           </button>
           <div>
             <button
-              disabled={this.state.currentUser !== "dev@cw.com"}
+              hidden={this.state.currentUser !== "dev@cw.com"}
               onClick={() => this.resetStats()}
             >
-              RESET <strong>DEV ONLY</strong>
+              <strong>RESET</strong>
             </button>
           </div>
           <div>
-            <p>
+            <p
+              hidden={
+                this.state.currentUser === "dev@cw.com" ||
+                this.state.currentUser === "spectator@cw.com"
+              }
+            >
               {this.state.currentUser
                 ? `${this.state.currentUser}'s balance: ${this.formatAmount(
                     this.state.funds
