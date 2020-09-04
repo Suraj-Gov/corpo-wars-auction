@@ -21,6 +21,7 @@ class Main extends Component {
     this.auth = firebase.auth();
     this.provider = new firebase.auth.GoogleAuthProvider();
     this.auth.onAuthStateChanged(async (user) => {
+      console.log(user);
       if (user !== null) {
         try {
           const userDetails = await this.db
@@ -50,7 +51,6 @@ class Main extends Component {
             return {
               id: i.doc.id,
               ...i.doc.data(),
-              biddingParty: "", //REMOVE THIS LINE IN PROD, why?
             };
           }),
         });
@@ -82,24 +82,26 @@ class Main extends Component {
   }
 
   bidCompany = (id, bids) => {
-    this.db
-      .collection("companies")
-      .doc(id)
-      .update({
-        bids: bids + 1,
-        biddingParty: this.state.currentUser,
+    if (this.state.funds > 0) {
+      this.db
+        .collection("companies")
+        .doc(id)
+        .update({
+          bids: bids + 1,
+          biddingParty: this.state.currentUser,
+        });
+
+      this.setState({
+        funds: 3000 - 900 - (bids + 1) * 25,
       });
 
-    this.setState({
-      funds: 3000 - 900 - bids * 25,
-    });
-
-    this.db
-      .collection("users")
-      .doc(this.state.currentUser)
-      .update({
-        fundsRemaining: 3000 - 900 - bids * 25,
-      });
+      this.db
+        .collection("users")
+        .doc(this.state.currentUser)
+        .update({
+          fundsRemaining: 3000 - 900 - (bids + 1) * 25,
+        });
+    } else console.log("NO FUNDS REMAINING!");
   };
 
   setAmount = (bids) => {
