@@ -60,7 +60,7 @@ class Main extends Component {
     });
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate() {
     if (this.state.changes.length !== 0) {
       let updatedCompanies = this.state.companies;
       this.state.changes.forEach((change) => {
@@ -70,22 +70,22 @@ class Main extends Component {
               i.biddingParty === this.state.currentUser ||
               change.doc.data().biddingParty === this.state.currentUser
             ) {
-              this.setState({
-                funds: 3000 - 900 - (i.bids + 1) * 25,
-              });
               this.db
                 .collection("users")
                 .doc(this.state.currentUser)
                 .update({
                   fundsRemaining: 3000 - 900 - (i.bids + 1) * 25,
                 });
+              this.setState({
+                funds: 3000 - 900 - (i.bids + 1) * 25,
+              });
             }
             if (change.doc.data().biddingParty !== this.state.currentUser) {
-              this.setState({
-                funds: 3000,
-              });
               this.db.collection("users").doc(this.state.currentUser).update({
                 fundsRemaining: 3000,
+              });
+              this.setState({
+                funds: 3000,
               });
             }
             return {
@@ -141,7 +141,7 @@ class Main extends Component {
   loginUser = async (e) => {
     console.log("logged in user");
     e.preventDefault();
-    const email = document.getElementById("email").value;
+    const email = document.getElementById("email").value.toLowerCase();
     const password = document.getElementById("pass").value;
     this.auth
       .signInWithEmailAndPassword(email, password)
@@ -174,7 +174,7 @@ class Main extends Component {
   createUser = async (e) => {
     console.log("created user");
     e.preventDefault();
-    const email = document.getElementById("email").value;
+    const email = document.getElementById("email").value.toLowerCase();
     const password = document.getElementById("pass").value;
 
     this.db.collection("users").doc(email).set({
@@ -228,6 +228,7 @@ class Main extends Component {
               >
                 Bid
               </button>
+              <button></button>
             </li>
           ))}
         </ul>
