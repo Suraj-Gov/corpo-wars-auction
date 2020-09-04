@@ -21,7 +21,6 @@ class Main extends Component {
     this.auth = firebase.auth();
     this.provider = new firebase.auth.GoogleAuthProvider();
     this.auth.onAuthStateChanged(async (user) => {
-      console.log(user);
       if (user !== null) {
         try {
           const userDetails = await this.db
@@ -67,6 +66,28 @@ class Main extends Component {
       this.state.changes.forEach((change) => {
         updatedCompanies = updatedCompanies.map((i) => {
           if (i.id === change.doc.id) {
+            if (
+              i.biddingParty === this.state.currentUser ||
+              change.doc.data().biddingParty === this.state.currentUser
+            ) {
+              this.setState({
+                funds: 3000 - 900 - (i.bids + 1) * 25,
+              });
+              this.db
+                .collection("users")
+                .doc(this.state.currentUser)
+                .update({
+                  fundsRemaining: 3000 - 900 - (i.bids + 1) * 25,
+                });
+            }
+            if (change.doc.data().biddingParty !== this.state.currentUser) {
+              this.setState({
+                funds: 3000,
+              });
+              this.db.collection("users").doc(this.state.currentUser).update({
+                fundsRemaining: 3000,
+              });
+            }
             return {
               ...change.doc.data(),
               id: change.doc.id,
@@ -89,17 +110,6 @@ class Main extends Component {
         .update({
           bids: bids + 1,
           biddingParty: this.state.currentUser,
-        });
-
-      this.setState({
-        funds: 3000 - 900 - (bids + 1) * 25,
-      });
-
-      this.db
-        .collection("users")
-        .doc(this.state.currentUser)
-        .update({
-          fundsRemaining: 3000 - 900 - (bids + 1) * 25,
         });
     } else console.log("NO FUNDS REMAINING!");
   };
