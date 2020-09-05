@@ -1,0 +1,317 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+button {
+  padding: 0.7rem 1rem;
+  background-color: #121212;
+  color: white;
+  font-size: 130%;
+  border-radius: 6px;
+  font-weight: 600;
+  margin-top: 0.3rem;
+  transition: all 0.2s;
+  border: none;
+  outline: none;
+}
+
+button:disabled,
+button:disabled:hover,
+button:disabled:active {
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  background-color: #5c5c5c;
+  color: gray;
+}
+
+button:hover {
+  cursor: pointer;
+  transform: translateX(-5px) translateY(-5px);
+  -moz-box-shadow: 5px 5px 20px #b3b3b3;
+  -webkit-box-shadow: 5px 5px 20px #b3b3b3;
+  box-shadow: 5px 5px 20px #b3b3b3;
+}
+
+button:active {
+  background-color: #505050;
+  outline: none;
+  transform: translateX(0) translateY(0);
+  background-color: #404040;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.container {
+  padding: 5rem;
+}
+
+.head {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin-bottom: 3rem;
+}
+
+.head > .title > h1 {
+  font-size: 4.5vw;
+  font-weight: 600;
+}
+
+.head > .title > h4 {
+  margin-top: 1rem;
+  font-size: 2vw;
+  font-weight: 400;
+}
+
+.balance {
+  display: flex;
+  flex-direction: row;
+}
+
+.balance > svg {
+  height: 8em;
+}
+
+.balance > * {
+  margin: 0.5em;
+  margin-top: 2em;
+}
+
+.balance,
+.reset {
+  margin-left: auto;
+}
+
+.balance > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.balance > div > h5 {
+  font-size: 1.7em;
+  font-weight: 400;
+}
+
+.balance > div > h3 {
+  font-size: 3.5em;
+  font-weight: 500;
+}
+
+.login {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.login > input {
+  padding: 0.9em;
+  font-size: 1em;
+  border-radius: 6px;
+  border: none;
+  background-color: #e2e2e2;
+  width: 120%;
+  margin: 0.5em;
+  outline-color: gray;
+}
+
+ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  list-style: none;
+}
+
+li {
+  background-color: #c4c4c4;
+  height: 30rem;
+  border-radius: 6px;
+  -moz-box-shadow: 5px 5px 20px #efefef;
+  -webkit-box-shadow: 5px 5px 20px #efefef;
+  box-shadow: 5px 5px 20px #efefef;
+  padding: 2em;
+  position: relative;
+  margin: 2.5%;
+  width: 20%;
+}
+
+li > h2 {
+  font-weight: 600;
+  font-size: 2.5vw;
+}
+
+.details {
+  position: absolute;
+  bottom: 7rem;
+}
+
+.action > .status > p {
+  position: absolute;
+  bottom: 1rem;
+}
+
+li > .details > .value,
+li > .details > .bidder {
+  padding: 1rem;
+  padding-left: 0;
+}
+
+li > .details > .value > h6,
+li > .details > .bidder > h6 {
+  font-size: 1vw;
+  font-weight: 400;
+}
+
+li > .details > .value > h3,
+li > .details > .bidder > h3 {
+  font-size: 1.5vw;
+  font-weight: 500;
+}
+
+li button {
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+}
+
+@media only screen and (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .head {
+    flex-direction: column;
+    margin-bottom: 2rem;
+  }
+
+  .head > .title > h1 {
+    font-size: 10vw;
+    text-align: center;
+  }
+
+  .head > .title > h4 {
+    margin-top: 0.8em;
+    font-size: 4vw;
+    text-align: center;
+  }
+
+  .login {
+    margin: 1em auto;
+    width: 80vw;
+    align-items: center;
+  }
+
+  .login > input {
+    width: inherit;
+  }
+
+  .login button {
+    margin: 0.4em auto;
+    width: inherit;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    list-style: none;
+    align-items: center;
+  }
+
+  li {
+    background-color: #c4c4c4;
+    height: 25em;
+    border-radius: 6px;
+    -moz-box-shadow: 5px 5px 20px #efefef;
+    -webkit-box-shadow: 5px 5px 20px #efefef;
+    box-shadow: 5px 5px 20px #efefef;
+    padding: 2em;
+    position: relative;
+    width: 80vw;
+    margin-bottom: 2rem;
+  }
+
+  li > h2 {
+    font-weight: 600;
+    font-size: 3em;
+  }
+
+  .details {
+    position: absolute;
+    bottom: 5rem;
+  }
+
+  .action > .status > p {
+    position: absolute;
+    bottom: 1rem;
+  }
+
+  li > .details > .value,
+  li > .details > .bidder {
+    padding: 1rem;
+    padding-left: 0;
+  }
+
+  li > .details > .value > h6,
+  li > .details > .bidder > h6 {
+    font-size: 1em;
+    font-weight: 400;
+  }
+
+  li > .details > .value > h3,
+  li > .details > .bidder > h3 {
+    font-size: 1.5em;
+    font-weight: 500;
+  }
+
+  li button {
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+  }
+
+  .balance {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: 0 auto;
+    right: 0;
+    z-index: 10;
+    background-color: #e0e0e0;
+  }
+
+  .balance > div {
+    margin: 0.8em auto;
+
+    width: inherit;
+  }
+
+  .balance > div > h5 {
+    font-size: 1em;
+    margin: 0 auto;
+  }
+
+  .balance > div > h3 {
+    font-size: 1.4em;
+    text-align: center;
+  }
+
+  .balance > svg {
+    /* height: 3em;
+    margin-top: 0.8em; */
+    display: none;
+  }
+
+  .balance > div > button {
+    display: none;
+  }
+}
