@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/corpo-wars-auction/static/css/main.3c6da797.chunk.css",
-    "main.js": "/corpo-wars-auction/static/js/main.ef160485.chunk.js",
-    "main.js.map": "/corpo-wars-auction/static/js/main.ef160485.chunk.js.map",
+    "main.css": "/corpo-wars-auction/static/css/main.f1e23604.chunk.css",
+    "main.js": "/corpo-wars-auction/static/js/main.4f6a0fa7.chunk.js",
+    "main.js.map": "/corpo-wars-auction/static/js/main.4f6a0fa7.chunk.js.map",
     "runtime-main.js": "/corpo-wars-auction/static/js/runtime-main.38e6591e.js",
     "runtime-main.js.map": "/corpo-wars-auction/static/js/runtime-main.38e6591e.js.map",
     "static/js/2.494e6a53.chunk.js": "/corpo-wars-auction/static/js/2.494e6a53.chunk.js",
     "static/js/2.494e6a53.chunk.js.map": "/corpo-wars-auction/static/js/2.494e6a53.chunk.js.map",
     "index.html": "/corpo-wars-auction/index.html",
-    "precache-manifest.4a38448890da2558fa5df735951df4e6.js": "/corpo-wars-auction/precache-manifest.4a38448890da2558fa5df735951df4e6.js",
+    "precache-manifest.04008328fd7dd93023c04a8aaa36db09.js": "/corpo-wars-auction/precache-manifest.04008328fd7dd93023c04a8aaa36db09.js",
     "service-worker.js": "/corpo-wars-auction/service-worker.js",
-    "static/css/main.3c6da797.chunk.css.map": "/corpo-wars-auction/static/css/main.3c6da797.chunk.css.map",
+    "static/css/main.f1e23604.chunk.css.map": "/corpo-wars-auction/static/css/main.f1e23604.chunk.css.map",
     "static/js/2.494e6a53.chunk.js.LICENSE.txt": "/corpo-wars-auction/static/js/2.494e6a53.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.38e6591e.js",
     "static/js/2.494e6a53.chunk.js",
-    "static/css/main.3c6da797.chunk.css",
-    "static/js/main.ef160485.chunk.js"
+    "static/css/main.f1e23604.chunk.css",
+    "static/js/main.4f6a0fa7.chunk.js"
   ]
 }
