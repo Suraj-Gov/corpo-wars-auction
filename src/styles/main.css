@@ -5,6 +5,11 @@
   margin: 0;
   font-family: "Inter", sans-serif;
   box-sizing: border-box;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 
@@ -33,10 +38,10 @@ button:disabled:active {
 
 button:hover {
   cursor: pointer;
-  transform: translateX(-5px) translateY(-5px);
-  -moz-box-shadow: 5px 5px 20px #b3b3b3;
-  -webkit-box-shadow: 5px 5px 20px #b3b3b3;
-  box-shadow: 5px 5px 20px #b3b3b3;
+  transform: translateX(-3px) translateY(-3px);
+  -moz-box-shadow: 5px 5px 20px #cacaca;
+  -webkit-box-shadow: 5px 5px 20px #cacaca;
+  box-shadow: 5px 5px 20px #cacaca;
 }
 
 button:active {
@@ -199,8 +204,8 @@ li button {
   }
 
   .head > .title > h4 {
-    margin-top: 0.8em;
-    font-size: 4vw;
+    margin-top: 0.8rem;
+    font-size: 6vw;
     text-align: center;
   }
 
@@ -313,5 +318,28 @@ li button {
 
   .balance > div > button {
     display: none;
+  }
+
+  button:hover {
+    transform: translateX(0) translateY(-3px);
+  }
+
+  button:active {
+    background-color: #505050;
+    outline: none;
+    transform: translateX(0) translateY(0);
+    background-color: #404040;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
+  button:disabled,
+  button:disabled:hover,
+  button:disabled:active {
+    transform: none;
+    box-shadow: none;
+    background-color: #5c5c5c;
+    color: gray;
   }
 }

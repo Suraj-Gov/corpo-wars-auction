@@ -127,6 +127,9 @@ class Main extends Component {
   };
 
   formatAmount = (amount) => {
+    if (amount === 0) {
+      return "₹0";
+    }
     amount = amount.toString();
     return `₹${amount.slice(0, -2)}${
       amount.slice(-2) === "00" ? "" : "." + amount.slice(-2)
