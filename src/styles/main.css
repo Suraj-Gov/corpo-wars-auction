@@ -137,7 +137,6 @@ ul {
 }
 
 li {
-  background-color: #c4c4c4;
   height: 30rem;
   border-radius: 6px;
   -moz-box-shadow: 5px 5px 20px #efefef;
@@ -233,12 +232,11 @@ li button {
   }
 
   li {
-    background-color: #c4c4c4;
     height: 25em;
     border-radius: 6px;
-    -moz-box-shadow: 5px 5px 20px #efefef;
-    -webkit-box-shadow: 5px 5px 20px #efefef;
-    box-shadow: 5px 5px 20px #efefef;
+    -moz-box-shadow: 12px 12px 20px #dedede;
+    -webkit-box-shadow: 12px 12px 20px #dedede;
+    box-shadow: 12px 12px 20px #dedede;
     padding: 2em;
     position: relative;
     width: 80vw;

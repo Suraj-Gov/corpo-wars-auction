@@ -42,6 +42,16 @@ class Main extends Component {
     });
   }
 
+  generateRandColor = () => {
+    const goldenRatioConj = 0.618033988749895;
+    let hue = Math.random();
+    hue += goldenRatioConj;
+    hue %= 1;
+    // hue.toString().slice(0, 3)
+    console.log(hue * 360);
+    return `hsl(${hue * 360}, 40%, 70%)`;
+  };
+
   componentDidMount() {
     this.db.collection("companies").onSnapshot((snapshot) => {
       let dataChange = snapshot.docChanges();
@@ -51,6 +61,7 @@ class Main extends Component {
             return {
               id: i.doc.id,
               ...i.doc.data(),
+              color: this.generateRandColor(),
             };
           }),
         });
@@ -322,7 +333,10 @@ class Main extends Component {
         ) : (
           <ul>
             {this.state.companies.map((company) => (
-              <li key={company["id"]}>
+              <li
+                key={company["id"]}
+                style={{ backgroundColor: company["color"] }}
+              >
                 <h2>{company["companyName"]}</h2>
                 <div className="details">
                   <div className="value">
