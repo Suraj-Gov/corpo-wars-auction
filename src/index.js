@@ -17,6 +17,8 @@ class Main extends Component {
       changes: [],
       currentUser: "",
       funds: -1,
+      userUpdates: [],
+      canBid: false,
     };
     this.db = firebase.firestore();
     this.auth = firebase.auth();
@@ -31,6 +33,7 @@ class Main extends Component {
           this.setState({
             currentUser: user.email,
             funds: userDetails.data().fundsRemaining,
+            canBid: userDetails.data().canBid,
           });
         } catch (e) {
           console.log(
@@ -65,6 +68,14 @@ class Main extends Component {
         this.setState({
           changes: dataChange,
         });
+    });
+    this.db.collection("users").onSnapshot((snapshot) => {
+      let dataChange = snapshot.docChanges();
+      if (dataChange.every((i) => i.type === "modified")) {
+        this.setState({
+          userUpdates: dataChange,
+        });
+      }
     });
   }
 
@@ -103,6 +114,7 @@ class Main extends Component {
             return {
               ...change.doc.data(),
               id: change.doc.id,
+              color: i.color,
             };
           } else return i;
         });
@@ -111,6 +123,16 @@ class Main extends Component {
         companies: updatedCompanies,
         changes: [],
       });
+    }
+    if (this.state.userUpdates.length !== 0) {
+      if (
+        this.state.userUpdates[0].doc.data().name === this.state.currentUser
+      ) {
+        this.setState({
+          canBid: this.state.userUpdates[0].doc.data().canBid,
+          userUpdates: [],
+        });
+      }
     }
   }
 
@@ -366,7 +388,7 @@ class Main extends Component {
                       </button>
                     ) : (
                       <button
-                        disabled={!company["isBiddable"]}
+                        disabled={!company["isBiddable"] || !this.state.canBid}
                         onClick={() =>
                           this.bidCompany(company["id"], company["bids"])
                         }
@@ -459,12 +481,12 @@ class Main extends Component {
           </div>
         </div>
          */}
-        <button
+        {/* <button
           hidden={this.state.currentUser}
           onClick={(e) => this.createUser(e)}
         >
           CREATE ACCOUNT ONLY DEV MODE
-        </button>
+        </button> */}
         <div style={{ paddingBottom: "5em" }}></div>
       </div>
     );
