@@ -43,12 +43,8 @@ class Main extends Component {
   }
 
   generateRandColor = () => {
-    const goldenRatioConj = 0.618033988749895;
     let hue = Math.random();
-    hue += goldenRatioConj;
     hue %= 1;
-    // hue.toString().slice(0, 3)
-    console.log(hue * 360);
     return `hsl(${hue * 360}, 40%, 70%)`;
   };
 
@@ -462,12 +458,13 @@ class Main extends Component {
             </p>
           </div>
         </div>
+         */}
         <button
           hidden={this.state.currentUser}
           onClick={(e) => this.createUser(e)}
         >
-          CREATE ACCOUNT
-        </button> */}
+          CREATE ACCOUNT ONLY DEV MODE
+        </button>
         <div style={{ paddingBottom: "5em" }}></div>
       </div>
     );
