@@ -1,3 +1,5 @@
+// THIS IS A HUGE FILE, I DID NOT REFACTOR IT INTO COMPONENTS.
+// If you're seeing this, I'm sorry for the huge file.
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import firebase from "firebase/app";
@@ -312,7 +314,15 @@ class Main extends Component {
               )
             ) : (
               // If the user is not logged
-              <div className="login">
+              <div
+                className="login"
+                style={{
+                  display:
+                    this.state.currentUser === "spectator@cw.com"
+                      ? "none"
+                      : "flex",
+                }}
+              >
                 {/* show login and password svgs here */}
                 <input
                   placeholder="EMAIL"
@@ -410,7 +420,13 @@ class Main extends Component {
             ))}
           </ul>
         )}
-        {/* <strong>{company["companyName"]}</strong> */}
+        {/* <button
+          hidden={this.state.currentUser}
+          onClick={(e) => this.createUser(e)}
+        >
+          CREATE ACCOUNT ONLY DEV MODE
+        </button> */}
+        {/* <strong>{company["companyName"]}</strong>
         {/* <span>{"    "}</span> */}
         {/* <em>{this.setAmount(company["bids"])}</em>
               <span>{"    "}</span>
@@ -435,7 +451,6 @@ class Main extends Component {
               >
                 Toggle
               </button> */}
-
         {/* <div>
           <button
             hidden={this.state.currentUser}
@@ -481,12 +496,6 @@ class Main extends Component {
           </div>
         </div>
          */}
-        {/* <button
-          hidden={this.state.currentUser}
-          onClick={(e) => this.createUser(e)}
-        >
-          CREATE ACCOUNT ONLY DEV MODE
-        </button> */}
         <div style={{ paddingBottom: "5em" }}></div>
       </div>
     );
