@@ -127,6 +127,8 @@ button:active {
   width: 120%;
   margin: 0.5em;
   outline-color: gray;
+  -webkit-user-select: auto;
+  -webkit-user-select: text;
 }
 
 ul {

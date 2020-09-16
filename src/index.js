@@ -204,8 +204,8 @@ class Main extends Component {
           currentUser: res.user.email,
         });
       })
-      .catch((res) => {
-        console.log("Error occured, user might not be in registry.", res);
+      .catch((err) => {
+        alert(err.message);
         return;
       });
   };
