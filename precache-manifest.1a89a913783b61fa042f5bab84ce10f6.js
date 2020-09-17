@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "afe39b3688596ae345d60ac0bbb0a57e",
+    "revision": "aee4581948c06048c7bf53e6f86a5053",
     "url": "/corpo-wars-auction/index.html"
   },
   {
-    "revision": "935d2c4eeb5ce9abd76c",
+    "revision": "a986aa67c00fee62f53c",
     "url": "/corpo-wars-auction/static/css/main.55e49a20.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/corpo-wars-auction/static/js/2.6532d0a3.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "935d2c4eeb5ce9abd76c",
-    "url": "/corpo-wars-auction/static/js/main.377fc60c.chunk.js"
+    "revision": "a986aa67c00fee62f53c",
+    "url": "/corpo-wars-auction/static/js/main.703c949b.chunk.js"
   },
   {
     "revision": "66cb3468c8b1b50ff993",
