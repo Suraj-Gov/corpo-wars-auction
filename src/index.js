@@ -99,10 +99,10 @@ class Main extends Component {
                 .collection("users")
                 .doc(this.state.currentUser)
                 .update({
-                  fundsRemaining: 3000 - 900 - (i.bids + 1) * 25,
+                  fundsRemaining: 3000 - 900 - (i.bids + 2) * 25,
                 });
               this.setState({
-                funds: 3000 - 900 - (i.bids + 1) * 25,
+                funds: 3000 - 900 - (i.bids + 2) * 25,
               });
             }
             if (change.doc.data().biddingParty !== this.state.currentUser) {
@@ -144,7 +144,7 @@ class Main extends Component {
         .collection("companies")
         .doc(id)
         .update({
-          bids: bids + 1,
+          bids: bids + 2,
           biddingParty: this.state.currentUser,
         });
     } else console.log("NO FUNDS REMAINING!");
@@ -381,7 +381,7 @@ class Main extends Component {
                     <h3>
                       {!company["biddingParty"]
                         ? "No bids yet"
-                        : company["biddingParty"]}
+                        : `${company["biddingParty"]} (you)`}
                     </h3>
                   </div>
                 </div>
