@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "596a4f5ab339f1153c12573c935999eb",
+    "revision": "3112e598f0b08ca1db3e5a693e79a951",
     "url": "/corpo-wars-auction/index.html"
   },
   {
