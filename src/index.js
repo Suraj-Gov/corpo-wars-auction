@@ -363,7 +363,12 @@ class Main extends Component {
             {this.state.companies.map((company) => (
               <li
                 key={company["id"]}
-                style={{ backgroundColor: company["color"] }}
+                style={{
+                  backgroundColor: company["color"],
+                  filter: !company["isBiddable"]
+                    ? "grayscale(90%)"
+                    : "grayscale(0%)",
+                }}
               >
                 <h2>{company["companyName"]}</h2>
                 <div className="details">

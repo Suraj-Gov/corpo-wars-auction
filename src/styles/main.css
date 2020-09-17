@@ -39,9 +39,9 @@ button:disabled:active {
 button:hover {
   cursor: pointer;
   transform: translateX(-3px) translateY(-3px);
-  -moz-box-shadow: 5px 5px 20px #cacaca;
-  -webkit-box-shadow: 5px 5px 20px #cacaca;
-  box-shadow: 5px 5px 20px #cacaca;
+  -moz-box-shadow: 5px 5px 20px #29292931;
+  -webkit-box-shadow: 5px 5px 20px #29292931;
+  box-shadow: 5px 5px 20px #29292931;
 }
 
 button:active {
