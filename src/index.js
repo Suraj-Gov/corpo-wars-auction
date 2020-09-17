@@ -381,7 +381,9 @@ class Main extends Component {
                     <h3>
                       {!company["biddingParty"]
                         ? "No bids yet"
-                        : `${company["biddingParty"]} (you)`}
+                        : this.state.currentUser === company["biddingParty"]
+                        ? "You"
+                        : company["biddingParty"].slice(0, -7)}
                     </h3>
                   </div>
                 </div>
