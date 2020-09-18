@@ -22,3 +22,8 @@ Structure of company:
 String: nameOfCompany, Number: bidCounts, String: biddingParty
 Structure of bidder:
 String: nameOfBidder, Number: fundsRemaining, String: currentBiddingCompany
+
+### Design
+Pure CSS, minimalistic. Mobile and Desktop views are great to look!
+
+![](corpo-wars.gif)
