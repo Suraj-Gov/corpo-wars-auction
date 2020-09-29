@@ -132,14 +132,26 @@ button:active {
 }
 
 ul {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  display: grid;
   list-style: none;
+  gap: 2rem;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media only screen and (max-width: 1300px) {
+  ul {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 li {
-  height: 30rem;
+  height: 25rem;
   border-radius: 6px;
   -moz-box-shadow: 5px 5px 20px #efefef;
   -webkit-box-shadow: 5px 5px 20px #efefef;
@@ -147,12 +159,12 @@ li {
   padding: 2em;
   position: relative;
   margin: 2.5%;
-  width: 20%;
 }
 
 li > h2 {
   font-weight: 600;
-  font-size: 2.5vw;
+  font-size: 2.5em;
+  margin-bottom: 1rem;
 }
 
 .details {
@@ -173,13 +185,13 @@ li > .details > .bidder {
 
 li > .details > .value > h6,
 li > .details > .bidder > h6 {
-  font-size: 1vw;
+  font-size: 1em;
   font-weight: 400;
 }
 
 li > .details > .value > h3,
 li > .details > .bidder > h3 {
-  font-size: 1.5vw;
+  font-size: 1.5em;
   font-weight: 500;
 }
 
