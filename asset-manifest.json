@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/corpo-wars-auction/static/css/main.55e49a20.chunk.css",
+    "main.css": "/corpo-wars-auction/static/css/main.cfdc06eb.chunk.css",
     "main.js": "/corpo-wars-auction/static/js/main.703c949b.chunk.js",
     "main.js.map": "/corpo-wars-auction/static/js/main.703c949b.chunk.js.map",
     "runtime-main.js": "/corpo-wars-auction/static/js/runtime-main.38e6591e.js",
@@ -8,15 +8,15 @@
     "static/js/2.6532d0a3.chunk.js": "/corpo-wars-auction/static/js/2.6532d0a3.chunk.js",
     "static/js/2.6532d0a3.chunk.js.map": "/corpo-wars-auction/static/js/2.6532d0a3.chunk.js.map",
     "index.html": "/corpo-wars-auction/index.html",
-    "precache-manifest.1a89a913783b61fa042f5bab84ce10f6.js": "/corpo-wars-auction/precache-manifest.1a89a913783b61fa042f5bab84ce10f6.js",
+    "precache-manifest.01e4364777001e8141215fb6fe43f487.js": "/corpo-wars-auction/precache-manifest.01e4364777001e8141215fb6fe43f487.js",
     "service-worker.js": "/corpo-wars-auction/service-worker.js",
-    "static/css/main.55e49a20.chunk.css.map": "/corpo-wars-auction/static/css/main.55e49a20.chunk.css.map",
+    "static/css/main.cfdc06eb.chunk.css.map": "/corpo-wars-auction/static/css/main.cfdc06eb.chunk.css.map",
     "static/js/2.6532d0a3.chunk.js.LICENSE.txt": "/corpo-wars-auction/static/js/2.6532d0a3.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.38e6591e.js",
     "static/js/2.6532d0a3.chunk.js",
-    "static/css/main.55e49a20.chunk.css",
+    "static/css/main.cfdc06eb.chunk.css",
     "static/js/main.703c949b.chunk.js"
   ]
 }

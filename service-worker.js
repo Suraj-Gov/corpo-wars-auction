@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/corpo-wars-auction/precache-manifest.1a89a913783b61fa042f5bab84ce10f6.js"
+  "/corpo-wars-auction/precache-manifest.01e4364777001e8141215fb6fe43f487.js"
 );
 
 self.addEventListener('message', (event) => {
